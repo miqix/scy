@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8" />
+  <title>收藏本站</title>
+  <style>
+    body { font-family: sans-serif; padding: 2em; text-align: center; background: #f9f9f9; }
+    .card { background: white; padding: 2em; box-shadow: 0 0 10px rgba(0,0,0,0.1); display: inline-block; max-width: 400px; }
+    .hint { color: gray; font-size: 0.9em; margin-top: 1em; }
+    .link { font-size: 1.2em; word-break: break-word; user-select: all; }
+    #fallback { display: none; margin-top: 1em; }
+    a { color: #0366d6; text-decoration: none; font-weight: 600; }
+    a:hover { text-decoration: underline; }
+    .email { margin-top: 1.5em; font-size: 0.9em; color: #555; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>欢迎访问</h2>
+    <p>请复制下方地址，在浏览器中打开：</p>
+    <div class="link" id="encodedUrl">aHR0cHM6Ly9oc3JpamkudG9w</div>
+    <p class="hint">提示：上方为加密地址，请自行 Base64 解码</p>
+    <p id="fallback">
+      如果未自动跳转，<a href="#" id="manualLink">请点击这里</a>
+    </p>
+    <p class="email">联系方式：<span id="email"></span></p>
+  </div>
+
+  <script>
+    // 取页面上的 Base64 编码链接
+    const encodedUrl = document.getElementById("encodedUrl").textContent.trim();
+    const decodedUrl = atob(encodedUrl);
+
+    // 自动跳转，3秒后显示备用链接
+    setTimeout(() => {
+      document.getElementById("fallback").style.display = "block";
+    }, 3000);
+
+    // 尝试自动跳转
+    window.location.href = decodedUrl;
+
+    // 备用链接绑定
+    document.getElementById("manualLink").href = decodedUrl;
+
+    // 动态显示邮箱，防爬虫
+    const user = "jizhudizhi"; // 改成你的邮箱用户名
+    const domain = "gmail.com"; // 改成你的邮箱域名
+    document.getElementById("email").textContent = user + "@" + domain;
+  </script>
+</body>
+</html>
